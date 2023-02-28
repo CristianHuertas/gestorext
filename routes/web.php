@@ -18,15 +18,23 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+//middleware
+$router->group(['middleware' => 'auth'], function () use ($router) {
+    // $router->get('/empleados', 'EmpleadoController@index');
+});
 
 
-$router->get('/empleados', 'EmpleadoController@index');
-$router->post('/empleados/consulta', 'EmpleadoController@show');
+// $router->get('/empleados', 'EmpleadoController@index');
+// $router->post('/empleados/consulta', 'EmpleadoController@show');
 
+$router->group(['prefix' => 'empleados'], function () use ($router) {
+    $router->get('/', 'EmpleadoController@index');
+    // $router->post('/consulta', 'EmpleadoController@show');
+});
 
+$router->group(['prefix' => 'usuarios'], function () use ($router) {
+    $router->post('/store', 'UserController@store');
+    // $router->post('/consulta', 'EmpleadoController@show');
+});
 
-// $router->post('/empleados', 'EmpleadoController@store');
-// $router->put('/empleados/{id}', 'EmpleadoController@update');
-// $router->delete('/empleados/{id}', 'EmpleadoController@destroy');
-// $router->get('/empleados/search/{nombre}', 'EmpleadoController@search');
 
